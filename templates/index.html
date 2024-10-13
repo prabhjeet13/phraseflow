@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Your Thoughts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eae0b2; /* Light mustard background color */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full height for vertical centering */
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: backgroundAnimation 10s infinite alternate; /* Background animation */
+        }
+        
+        h1 {
+            color: #333; /* Dark color for the heading */
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            font-size: 2.5em; /* Increase font size for main heading */
+        }
+
+        h2 {
+            color: #666; /* Lighter color for subheading */
+            font-weight: normal;
+            margin-bottom: 30px;
+            font-size: 1.5em; /* Subheading size */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 700px; /* Max width for container */
+            background: rgba(173, 216, 230, 0.9); /* Light blue background */
+            padding: 20px; /* Reduced padding from 30px to 20px */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Box shadow for container */
+            transition: transform 0.3s; /* Animation for container */
+        }
+
+        .container:hover {
+            transform: scale(1.02); /* Slight scale effect on hover */
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 700px;
+            height: 100px; /* Reduced height from 150px to 100px */
+            padding: 15px; /* Increased padding */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            resize: none; /* Disable resizing */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        textarea:focus {
+            box-shadow: 0 0 10px rgba(0, 117, 255, 0.5);
+            outline: none; /* Remove default outline */
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+            font-weight: bold;
+            color: #333; /* Dark color for the label */
+        }
+
+        select {
+            width: 100%; /* Expanded width for dropdown */
+            max-width: 700px;
+            padding: 10px; /* Increased padding */
+            margin: 10px 0; /* Added margin */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+            background-color: #f5f5f5; /* Light gray background for dropdown */
+            color: #333; /* Dark text color */
+        }
+
+        select:focus {
+            box-shadow: 0 0 10px rgba(0, 117, 255, 0.5);
+            outline: none; /* Remove default outline */
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 15px 25px; /* Increased padding */
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0; /* Added margin */
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+            transform: translateY(-3px); /* Slight lift on hover */
+        }
+
+        button:active {
+            transform: translateY(0); /* Reset on click */
+        }
+
+        audio {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px; /* Padding for audio element */
+        }
+
+        /* Animation for body */
+        @keyframes backgroundAnimation {
+            0% { background-color: #eae0b2; }
+            50% { background-color: #e1d6a4; }
+            100% { background-color: #eae0b2; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 700px) {
+            .container {
+                padding: 15px 10px; /* Further reduced padding on smaller screens */
+            }
+
+            textarea {
+                height: 80px; /* Further reduced height on smaller screens */
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            select {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+
+            label {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Voice Your Thoughts</h1>
+        <h2>Transform Text into Engaging Speech</h2>
+        <textarea id="textInput" rows="4" placeholder="Enter text here..." required></textarea>
+        
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect" name="languageSelect" required>
+            <option value="" disabled selected>Select Language</option>
+            <option value="en">English (EN)</option>
+            <option value="es">Spanish (ES)</option>
+            <option value="fr">French (FR)</option>
+            <option value="de">German (DE)</option>
+            <option value="pt">Portuguese (PT)</option>
+            <!-- <option value="hi">Hindi (PT)</option> -->
+            <option value="it">Italian (IT)</option>
+        </select>
+        
+        <button id="convertButton">Convert to Speech</button>
+        <audio id="audioPlayer" controls></audio>
+    </div>
+
+    <script>
+        document.getElementById('convertButton').onclick = function() {
+            const text = document.getElementById('textInput').value.trim();
+            const language = document.getElementById('languageSelect').value;
+
+            if (!text) {
+                alert('Please enter text to convert.');
+                return;
+            }
+
+            if (!language) {
+                alert('Please select a language.');
+                return;
+            }
+
+            fetch('/tts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text, language: language }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.blob();
+            })
+            .then(audioBlob => {
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audioPlayer = document.getElementById('audioPlayer');
+                audioPlayer.src = audioUrl;
+                audioPlayer.play();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(`Error: ${error.error || 'An unexpected error occurred.'}`);
+            });
+        };
+    </script>
+</body>
+</html>

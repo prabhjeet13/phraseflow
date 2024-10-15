@@ -49,11 +49,11 @@ from googletrans import Translator
 
 def text_to_speech(text: str, language: str,output_filename: str = 'output_audio.wav'):
     
-    engine = pyttsx3.init()
-    
+    engine = pyttsx3.init(driverName='sapi5')
     # Set the properties for the voice based on language
     voices = engine.getProperty('voices')
-    
+    available_voices = {voice.id: voice.name for voice in voices}
+    print("Available voices:", available_voices)
     # Change the voice based on the selected language
 
 
@@ -64,7 +64,6 @@ def text_to_speech(text: str, language: str,output_filename: str = 'output_audio
     print(f"Translated text: {translated_text}")
 
     # Initialize TTS engine
-    engine = pyttsx3.init(driverName='sapi5')
 
     # Define voice mapping
     voices = {

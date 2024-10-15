@@ -49,7 +49,8 @@ from googletrans import Translator
 
 def text_to_speech(text: str, language: str,output_filename: str = 'output_audio.wav'):
     
-    engine = pyttsx3.init(driverName='sapi5')
+    # engine = pyttsx3.init(driverName='sapi5')
+    engine = pyttsx3.init(driverName='espeak')
     # Set the properties for the voice based on language
     voices = engine.getProperty('voices')
     available_voices = {voice.id: voice.name for voice in voices}

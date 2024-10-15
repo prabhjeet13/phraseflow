@@ -64,7 +64,7 @@ def text_to_speech(text: str, language: str,output_filename: str = 'output_audio
     print(f"Translated text: {translated_text}")
 
     # Initialize TTS engine
-    engine = pyttsx3.init()
+    engine = pyttsx3.init(driverName='sapi5')
 
     # Define voice mapping
     voices = {

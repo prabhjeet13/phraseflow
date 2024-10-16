@@ -1,9 +1,10 @@
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torchaudio
+# import torch
+# from transformers import AutoModelForCausalLM, AutoTokenizer
+# import torchaudio
 import os
-import pyttsx3
-from googletrans import Translator
+from gtts import gTTS
+# import pyttsx3
+# from googletrans import Translator
 # Dictionary to map languages to model names
 # language_model_map = {
 #     'en': 'facebook/tts_transformer-en',
@@ -49,52 +50,56 @@ from googletrans import Translator
 
 def text_to_speech(text: str, language: str,output_filename: str = 'output_audio.wav'):
     
+     tts = gTTS(text=text, lang=language, slow=False)
+     tts.save(output_filename)
+     return output_filename
+    
     # engine = pyttsx3.init(driverName='sapi5')
-    engine = pyttsx3.init(driverName='espeak')
+    # engine = pyttsx3.init(driverName='espeak')
     # Set the properties for the voice based on language
-    voices = engine.getProperty('voices')
-    available_voices = {voice.id: voice.name for voice in voices}
-    print("Available voices:", available_voices)
+    # voices = engine.getProperty('voices')
+    # available_voices = {voice.id: voice.name for voice in voices}
+    # print("Available voices:", available_voices)
     # Change the voice based on the selected language
 
 
-    translator = Translator()
+    # translator = Translator()
 
     # Translate the text to the target language (French)
-    translated_text = translator.translate(text, dest=language).text
-    print(f"Translated text: {translated_text}")
+    # translated_text = translator.translate(text, dest=language).text
+    # print(f"Translated text: {translated_text}")
 
     # Initialize TTS engine
 
     # Define voice mapping
-    voices = {
-            'en': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0',  # English (US)
-            # 'en_US': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0',  # American English
-            # 'en_GB': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-GB_HELENA_11.0',  # British English
-            'fr': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_FR-FR_HORTENSE_11.0',  # French
-            'es': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_ES-ES_HELENA_11.0',  # Spanish
-            'de': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_DE-DE_HEDDA_11.0',    # German
-            'it': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_IT-IT_CHIARA_11.0',  # Italian
-            # 'zh': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_ZH-CN_HUIHUI_11.0',  # Chinese
-            # 'ja': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_JA-JP_MISAKI_11.0',  # Japanese
-            # 'ko': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_KO-KR_HYUNJUNG_11.0', # Korean
-            # 'ru': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_RU-RU_ALISA_11.0',   # Russian
-            # 'ar': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_AR-SA_HAIDER_11.0',   # Arabic
-            # 'hi': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_HI-IN_AJAY_11.0',     # Hindi
-            'pt': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_PT-BR_HENRIQUE_11.0', # Portuguese
-        }
+    # voices = {
+        #     'en': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0',  # English (US)
+        #     # 'en_US': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0',  # American English
+        #     # 'en_GB': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-GB_HELENA_11.0',  # British English
+        #     'fr': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_FR-FR_HORTENSE_11.0',  # French
+        #     'es': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_ES-ES_HELENA_11.0',  # Spanish
+        #     'de': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_DE-DE_HEDDA_11.0',    # German
+        #     'it': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_IT-IT_CHIARA_11.0',  # Italian
+        #     # 'zh': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_ZH-CN_HUIHUI_11.0',  # Chinese
+        #     # 'ja': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_JA-JP_MISAKI_11.0',  # Japanese
+        #     # 'ko': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_KO-KR_HYUNJUNG_11.0', # Korean
+        #     # 'ru': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_RU-RU_ALISA_11.0',   # Russian
+        #     # 'ar': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_AR-SA_HAIDER_11.0',   # Arabic
+        #     # 'hi': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_HI-IN_AJAY_11.0',     # Hindi
+        #     'pt': 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_PT-BR_HENRIQUE_11.0', # Portuguese
+        # }
 
     # Set the voice based on the selected language
-    if language in voices:
-        engine.setProperty('voice', voices[language])
-    else:
-        print(f"No voice found for language: {language}. Using default voice.")
+    # if language in voices:
+    #     engine.setProperty('voice', voices[language])
+    # else:
+    #     print(f"No voice found for language: {language}. Using default voice.")
     
     # Save speech to a file
-    engine.save_to_file(translated_text, output_filename)
-    engine.runAndWait()
+    # engine.save_to_file(translated_text, output_filename)
+    # engine.runAndWait()
     
-    return output_filename
+    # return output_filename
 
 
 
